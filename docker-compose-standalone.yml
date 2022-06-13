@@ -2,14 +2,11 @@ version: '2.4'
 
 services:
 
-
   # latency-monitor
   latency-monitor:
     container_name: latency-monitor
     hostname: latency-monitor
     build: ./Docker_Build
-    depends_on: 
-      - influxdb
     restart: always
     environment: 
       - INFLUX_URL
