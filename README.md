@@ -4,7 +4,7 @@ Docker container which tracks latency of one or many hosts and reports to Influx
 
 ## Description
 
-This Docker Container is able to track the latency of one or many targets and reports all data to a given InfluxDBv2.
+This docker container is able to track the latency of one or many targets and reports all data to a given InfluxDBv2.
 
 It´s based on python3 an makes usage of following python libraries:
 
@@ -22,6 +22,12 @@ Configuration can be passed via ENV **OR** configuration file.
 In case of using the ENV option you are just able to monitor **ONE** target for more targets please use the configuration file. 
 
 Also some influx connection options are just configurable via config file but normally they are not needed.
+
+Per default the python influx connector will cache all replies and sends them bundled every 30 seconds to the Influx DB.
+
+The container will be build at 1st start.
+
+You can find everything under *./Docker_Build/* and in the python program itself [latency_monitor.py](./Docker_Build/latency_monitor.py)
 
 ## Requirements
 
@@ -161,7 +167,7 @@ should do the job
 
 #### Grafana Dashboard Examples
 
-Within the local path *./grafana/examples/*  you can find example *.json* files which can be imported to grafana as dashboards to give you a first point to start with.
+Within the local path *./examples/grafana/*  you can find example *.json* files which can be imported to grafana as dashboards to give you a first point to start with.
 
 
 -----
