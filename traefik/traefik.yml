@@ -1,0 +1,30 @@
+api:
+    dashboard: true
+log:
+    level: ERROR
+accessLog: {}
+entryPoints:
+    http:
+        address: ":80"
+    https:
+        address: ":443"
+    influxdb:
+        address: ":8086"
+providers:
+    docker:
+        endpoint: "tcp://dockerproxy:2375"
+        exposedByDefault: false
+    file:
+        filename: "/dynamic_conf.yml"
+metrics:
+    prometheus:
+        entryPoint: metrics
+        addServicesLabels: true
+        addEntryPointsLabels: true
+        buckets:
+            - 0.1
+            - 0.3
+            - 1.2
+            - 5.0
+
+
