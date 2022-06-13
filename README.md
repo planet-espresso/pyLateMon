@@ -23,16 +23,14 @@ In case of using the ENV option you are just able to monitor **ONE** target for 
 
 Also some influx connection options are just configurable via config file but normally they are not needed.
 
-## Getting Started
-
-### Requirements
+## Requirements
 
 - Docker
 - Docker-Compose
 - InfluxDB Version >= 2
 - pythonping needs root privileges so same for the container
 
-### ENV Variables
+## ENV Variables
 
 Name | Example | Usage | Option/Must
 :------: | :-----: | :-----: | :-----:
@@ -44,7 +42,7 @@ TARGET_HOST | 8.8.8.8 | Monitored Host (IP/FQDN) | must
 TARGET_TIMER | 3 | ping frequency in sec. | option
 TARGET_LOCATION | Google | decript. location | option
 
-### Config File
+## Config File
 
 **Instead** of using the ENV variables you can use a config file.
 
@@ -54,22 +52,22 @@ See [template_config.ini](./Docker_Build/template_config.ini)
 
 Rename the file to *config.ini* make your changes and add it as a volume mount to the container:
 
-#### Docker-Compose Style
+### Docker-Compose Style
 
 ```
         volumes:
             - /YOUR_PATH/config.ini:/app/config.ini
 ```
 
-#### Docker-CLI Style
+### Docker-CLI Style
 
 ```
             docker latency-monitor -v /YOUR_PATH/config.ini:/app/config.ini
 ```
 
-### Compose Files
+## Compose Files
 
-#### FULL-STACK
+### FULL-STACK
 
 1st thing to do is creating the *docker-compose.yml:
 
@@ -77,7 +75,7 @@ Rename the file to *config.ini* make your changes and add it as a volume mount t
 cp docker-compose-full_stack.yml docker-compose.yml
 ```
 
-##### Certificate
+#### Certificate
 
 *Traefik* will act as a proxy and ensures the usage of TLS so it needs your certificate and key file.
 
@@ -92,7 +90,7 @@ so please place your certificate file as *./traefik/mycert.crt* and the key file
 
 Thats it
 
-##### Variables
+#### Variables
 You need to configure Variables in following files to make the compose work:
 
 - **file**
@@ -126,7 +124,7 @@ You need to configure Variables in following files to make the compose work:
     - YOUR_BUCKET_NAME
 
 
-##### File Permissions
+#### File Permissions
 Because we are configuring *grafana* for permanent data storing and *grafana* actually runs with *UID* + *GID*: *472:472* it´s necessary to change permisson of die permanent storage directory we have configured.
 
 The directory build from the following config part of grafana within the docker-compose.yml:
