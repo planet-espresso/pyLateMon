@@ -159,6 +159,11 @@ docker-compose up -d
 should do the job
 
 
+#### Grafana Dashboard Examples
+
+Within the local path *./grafana/examples/*  you can find example *.json* files which can be imported to grafana as dashboards to give you a first point to start with.
+
+
 -----
 -----
 
