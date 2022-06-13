@@ -83,7 +83,7 @@ services:
     networks:
       - net-webproxy-no-inet
 
- # GRAFANA
+  # GRAFANA
   grafana:
     container_name: grafana
     hostname: grafana
@@ -116,7 +116,7 @@ services:
     networks:
       - net-webproxy-no-inet
 
-# latency-monitor
+  # latency-monitor
   latency-monitor:
     container_name: latency-monitor
     hostname: latency-monitor

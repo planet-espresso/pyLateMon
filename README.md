@@ -65,11 +65,16 @@ Rename the file to *config.ini* make your changes and add it as a volume mount t
             docker latency-monitor -v /YOUR_PATH/config.ini:/app/config.ini
 ```
 
+
+-----
+-----
+
+
 ## Compose Files
 
 ### FULL-STACK
 
-1st thing to do is creating the *docker-compose.yml:
+1st thing to do is creating the *docker-compose.yml from [docker-compose-full_stack.yml](./docker-compose-full_stack.yml):
 
 ```
 cp docker-compose-full_stack.yml docker-compose.yml
@@ -145,9 +150,55 @@ then you have to do the following
 chown -R 472:472 /opt/docker/containers/grafana/var_lib
 ```
 
+#### Lets go
+
+```
+docker-compose up -d
+```
+
+should do the job
 
 
+-----
+-----
 
+
+### STANDALONE
+
+1st thing to do is creating the *docker-compose.yml from [docker-compose-standalone.yml](./docker-compose-standalone.yml):
+
+```
+cp docker-compose-standalone.yml docker-compose.yml
+```
+
+
+#### Variables
+
+Below paragraph: 
+
+```
+####################################################
+# LATENCY-MONITOR
+####################################################
+```
+
+in the **.env** file *(env needs to be renamed to .env)* configure following variables:
+
+- YOUR_ORGANIZATION
+- YOUR_BUCKET_NAME
+- YOUR_ADMIN_TOKEN
+- YOUR_MONITORED_TARGET
+- YOUR_MONITORED_TARGET_TIMER
+- YOUR_MONITORED_TARGET_LOCATION
+
+
+#### Lets go
+
+```
+docker-compose up -d latency-monitor
+```
+
+should do the job
 
 
 ## Authors
