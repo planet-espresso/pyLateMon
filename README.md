@@ -37,10 +37,12 @@ Also some influx connection options are just configurable via config file but no
 Name | Example | Usage | Option/Must
 :------: | :-----: | :-----: | :-----:
 INFLUX_URL | http://10.0.0.1:8086 | InfluxDB Host | must
-INFLUX_TOKEN | eWOcp-MCv2Y3IJPlER7wcCiuYkV8HdC8d7...ICKirhw0lwEczRNnrIoTqZAg== | InfluxDB API Token | must
+INFLUX_TOKEN | eWOcp-MCv2Y3IJPlER7wc...ICKirhw0lwEczRNnrIoTqZAg== | InfluxDB API Token | must
 INFLUX_BUCKET | latency | InfluxDB Bucket | must
 INFLUX_ORG | MyOrg | InfluxDB Organization | must
 TARGET_HOST | 8.8.8.8 | Monitored Host (IP/FQDN) | must
+TARGET_TIMER | 3 | ping frequency in sec. | option
+TARGET_LOCATION | Google | decript. location | option
 
 ### Config File
 
@@ -100,7 +102,7 @@ You need to configure Variables in following files to make the compose work:
 
 -----
 
-- **docker-compose.yml** *(was docker-compose-full_stack.yml before*
+- **docker-compose.yml** *(was docker-compose-full_stack.yml before)*
     - PLACE_YOUR_FQDN_HERE (3 times)
 
 -----
@@ -112,6 +114,9 @@ You need to configure Variables in following files to make the compose work:
     - YOUR_ORGANIZATION
     - YOUR_BUCKET_NAME
     - YOUR_ADMIN_TOKEN
+    - YOUR_MONITORED_TARGET
+    - YOUR_MONITORED_TARGET_TIMER
+    - YOUR_MONITORED_TARGET_LOCATION
 
 -----
 

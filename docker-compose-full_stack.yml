@@ -130,6 +130,8 @@ services:
       - INFLUX_BUCKET
       - INFLUX_ORG
       - TARGET_HOST
+      - TARGET_TIMER
+      - TARGET_LOCATION
     networks:
       - net-webproxy
       - net-webproxy-no-inet
