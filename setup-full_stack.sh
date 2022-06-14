@@ -43,8 +43,8 @@ sed -i -e "s/YOUR_BUCKET_NAME/$INFLUX_BUCKET/g" $MyScriptPath/grafana/provisioni
 # Correct owner and permissions to satisfy the containers
 echo "CHMOD: chmod -R 755 $MyPath"
 chmod -R 755 $MyPath
-echo "CHMOD: chmod 644 $MyScriptPath/grafana/datasources/grafana-datasource.yml"
-chmod 644 $MyScriptPath/grafana/datasources/grafana-datasource.yml
+echo "CHMOD: chmod 644 $MyScriptPath/grafana/provisioning/datasources/grafana-datasource.yml"
+chmod 644 $MyScriptPath/grafana/provisioning/datasources/grafana-datasource.yml
 echo "CHOWN: chown -R 472.472 $MyPath/grafana/var_lib"
 chown -R 472.472 $MyPath/grafana/var_lib
 
