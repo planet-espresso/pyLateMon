@@ -8,6 +8,7 @@
 
 MyPath=/YOUR_PATH_TO_CONTAINER_STATIC_DATA/
 
+MyFQDN=FQDN_OF_THIS_HOST
 
 ####################################################
 # INFLUXDB
