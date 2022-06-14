@@ -17,17 +17,17 @@ It´s based on python3 an makes usage of following python libraries:
 - configparser
 - time
 
-Configuration can be passed via ENV **OR** configuration file.
+You can use it in *standalone* or *full stack* mode.
 
-In case of using the ENV option you are just able to monitor **ONE** target for more targets please use the configuration file. 
+**Standalone:**
+- Just the latency-monitor container which sends data to an external InfluxDB2 Server
 
-Also some influx connection options are just configurable via config file but normally they are not needed.
+**Full Stack:**
+- Traefik container as Proxy (full TLS support)
+- InfluxDB2 container, fully setup and ready to take data
+- Grafana container, fully setup and connected (but without dashboards)
+- latency-monitor container sending data to the InfluxDB2 container
 
-Per default the python influx connector will cache all replies and sends them bundled every 30 seconds to the Influx DB.
-
-The container will be build at 1st start.
-
-You can find everything under *./Docker_Build/* and in the python program itself [latency_monitor.py](./Docker_Build/latency_monitor.py)
 
 ## Requirements
 
@@ -36,7 +36,26 @@ You can find everything under *./Docker_Build/* and in the python program itself
 - InfluxDB Version >= 2
 - pythonping needs root privileges so same for the container
 
-## ENV Variables
+## Configuration (GENERAL)
+
+Configuration can be passed via ENV **OR** configuration file.
+
+In case of using the ENV option you are just able to monitor **ONE** target for more targets please use the configuration file. 
+
+Also some influx connection options are just configurable via config file but normally they are not needed.
+
+
+### Behaviour 
+
+Per default the python influx connector will cache all replies and sends them bundled every 30 seconds to the Influx DB.
+
+The container will be build at 1st start.
+
+You can find everything under *./Docker_Build/* and in the python program itself [latency_monitor.py](./Docker_Build/latency_monitor.py)
+
+-----
+
+### ENV Variables
 
 Name | Example | Usage | Option/Must
 :------: | :-----: | :-----: | :-----:
@@ -48,60 +67,107 @@ TARGET_HOST | 8.8.8.8 | Monitored Host (IP/FQDN) | must
 TARGET_TIMER | 3 | ping frequency in sec. | option
 TARGET_LOCATION | Google | decript. location | option
 
-## Config File
+-----
+
+### Config File
 
 **Instead** of using the ENV variables you can use a config file.
 
 **Keep in mind it´s a OR decision not a AND**  
 
-See [template_config.ini](./Docker_Build/template_config.ini)
+See [./latency-monitor/config.ini](./latency-monitor/config.ini)
 
-Rename the file to *config.ini* make your changes and add it as a volume mount to the container:
 
-### Docker-Compose Style
+#### Docker-Compose Style
 
-```
-        volumes:
-            - /YOUR_PATH/config.ini:/app/config.ini
-```
-
-### Docker-CLI Style
+uncomment: 
 
 ```
-            docker latency-monitor -v /YOUR_PATH/config.ini:/app/config.ini
+# - ./latency-monitor/config.ini:/app/config.ini:ro # UNCOMMENT IF NEEDED
 ```
+
+#### Docker-CLI Style
+
+```
+docker latency-monitor -v ./latency-monitor/config.ini:/app/config.ini:ro
+```
+
+-----
+-----
+
+## Configuration (Standalone)
+
+1st thing to do is creating the *docker-compose.yml from [docker-compose-standalone.yml](./docker-compose-standalone.yml):
+
+```
+cp docker-compose-standalone.yml docker-compose.yml
+```
+
+### Variables
+
+Below paragraph:
+
+```
+####################################################
+# LATENCY-MONITOR
+####################################################
+```
+
+in the **.env** file *(env needs to be renamed to .env)* configure following variables:
+
+- YOUR_ORGANIZATION
+- YOUR_BUCKET_NAME
+- YOUR_ADMIN_TOKEN
+- YOUR_MONITORED_TARGET
+- YOUR_MONITORED_TARGET_TIMER
+- YOUR_MONITORED_TARGET_LOCATION
+
+### Lets go
+
+```
+docker-compose up -d latency-monitor
+```
+
+should do the job
 
 
 -----
 -----
 
 
-## Compose Files
+## Configuration (Full-Stack)
 
-### FULL-STACK
+### Easy peasy automatic mode
 
-1st thing to do is creating the *docker-compose.yml from [docker-compose-full_stack.yml](./docker-compose-full_stack.yml):
+Have a look at [./setup-full_stack.sh](./setup-full_stack.sh)
 
-```
-cp docker-compose-full_stack.yml docker-compose.yml
-```
-
-#### Certificate
-
-*Traefik* will act as a proxy and ensures the usage of TLS so it needs your certificate and key file.
-
-within the *docker-compose.yml* you will find:
+Just create a valid *.env* File by:
 
 ```
-      - ./traefik/mycert.crt:/certs/cert.crt:ro
-      - ./traefik/mycert.key:/certs/privkey.key:ro
+cp env .env
 ```
 
-so please place your certificate file as *./traefik/mycert.crt* and the key file as *./traefik/mycert.key*.
+and editing it to your needs.
 
-Thats it
+After everyting within *.env* is in order just do:
+
+```
+./setup-full_stack.sh
+```
+
+Everything should be right in place now.
+
+Just the certificates are missing look [here](#certificate)
+
+-----
+-----
+
+### WTF maual mode
+
+You need to set all on your own:
 
 #### Variables
+
 You need to configure Variables in following files to make the compose work:
 
 - **file**
@@ -112,30 +178,32 @@ You need to configure Variables in following files to make the compose work:
 -----
 
 - **docker-compose.yml** *(was docker-compose-full_stack.yml before)*
-    - PLACE_YOUR_FQDN_HERE (3 times)
+  - PLACE_YOUR_FQDN_HERE (3 times)
 
 -----
 
 - **.env** *(env needs to be renamed to .env)*
-    - YOUR_PATH_TO_CONTAINER_STATIC_DATA
-    - YOUR_ADMIN_USER
-    - YOUR_ADMIN_PASSWORD
-    - YOUR_ORGANIZATION
-    - YOUR_BUCKET_NAME
-    - YOUR_ADMIN_TOKEN
-    - YOUR_MONITORED_TARGET
-    - YOUR_MONITORED_TARGET_TIMER
-    - YOUR_MONITORED_TARGET_LOCATION
+  - YOUR_PATH_TO_CONTAINER_STATIC_DATA
+  - YOUR_ADMIN_USER
+  - YOUR_ADMIN_PASSWORD
+  - YOUR_ORGANIZATION
+  - YOUR_BUCKET_NAME
+  - YOUR_ADMIN_TOKEN
+  - YOUR_MONITORED_TARGET
+  - YOUR_MONITORED_TARGET_TIMER
+  - YOUR_MONITORED_TARGET_LOCATION
 
 -----
 
 - **grafana/provisioning/datasources/grafana-datasource.yml**
-    - YOUR_ADMIN_TOKEN
-    - YOUR_ORGANIZATION
-    - YOUR_BUCKET_NAME
+  - YOUR_ADMIN_TOKEN
+  - YOUR_ORGANIZATION
+  - YOUR_BUCKET_NAME
 
+-----
 
 #### File Permissions
+
 Because we are configuring *grafana* for permanent data storing and *grafana* actually runs with *UID* + *GID*: *472:472* it´s necessary to change permisson of die permanent storage directory we have configured.
 
 The directory build from the following config part of grafana within the docker-compose.yml:
@@ -156,16 +224,34 @@ then you have to do the following
 chown -R 472:472 /opt/docker/containers/grafana/var_lib
 ```
 
-#### Lets go
+Everything should be right in place now.
+
+Just the certificates are missing look [here](#certificate)
+
+-----
+-----
+
+## Certificate
+
+*Traefik* will act as a proxy and ensures the usage of TLS so it needs your certificate and key file.
+
+within the *docker-compose.yml* you will find:
 
 ```
-docker-compose up -d
+      - ./traefik/mycert.crt:/certs/cert.crt:ro
+      - ./traefik/mycert.key:/certs/privkey.key:ro
 ```
 
-should do the job
+so please place your certificate file as *./traefik/mycert.crt* and the key file as *./traefik/mycert.key*.
+
+Thats it
 
 
-#### Grafana Dashboard Examples
+
+
+
+
+## Grafana Dashboard Examples
 
 Within the local path *./examples/grafana/*  you can find example *.json* files which can be imported to grafana as dashboards to give you a first point to start with.
 
@@ -174,42 +260,10 @@ Within the local path *./examples/grafana/*  you can find example *.json* files 
 -----
 
 
-### STANDALONE
-
-1st thing to do is creating the *docker-compose.yml from [docker-compose-standalone.yml](./docker-compose-standalone.yml):
-
-```
-cp docker-compose-standalone.yml docker-compose.yml
-```
 
 
-#### Variables
-
-Below paragraph: 
-
-```
-####################################################
-# LATENCY-MONITOR
-####################################################
-```
-
-in the **.env** file *(env needs to be renamed to .env)* configure following variables:
-
-- YOUR_ORGANIZATION
-- YOUR_BUCKET_NAME
-- YOUR_ADMIN_TOKEN
-- YOUR_MONITORED_TARGET
-- YOUR_MONITORED_TARGET_TIMER
-- YOUR_MONITORED_TARGET_LOCATION
 
 
-#### Lets go
-
-```
-docker-compose up -d latency-monitor
-```
-
-should do the job
 
 
 ## Authors

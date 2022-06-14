@@ -124,6 +124,10 @@ services:
     depends_on: 
       - influxdb
     restart: always
+    volumes:
+      # - ./latency-monitor/config.ini:/app/config.ini:ro # UNCOMMENT IF NEEDED
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     environment: 
       - INFLUX_URL
       - INFLUX_TOKEN
