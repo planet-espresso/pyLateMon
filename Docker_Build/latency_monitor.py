@@ -82,7 +82,7 @@ class MyInfluxDB():
     def write(self, host, host_location, ping_response):
         self.host = host
         self.host_location = host_location
-        self.ping_response = ping_response
+        self.ping_response = int(ping_response)
         self.influx_timestamp = int(time_ns())
         self.data_point = Point("latency_monitor").tag("location", self.host_location).tag("host", self.host).field("latency", self.ping_response).time(self.influx_timestamp)
         self.write_api.write(bucket=self.INFX_BUCKET,

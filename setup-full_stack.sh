@@ -37,7 +37,7 @@ sed -i -e "s/PLACE_YOUR_FQDN_HERE/$MyFQDN/g" $MyScriptPath/docker-compose.yml
 # Changes in grafana/provisioning/datasources/grafana-datasource.yml
 echo "CHANGE: replace YOUR_ADMIN_TOKEN with $INFLUX_TOKEN in $MyScriptPath/grafana/provisioning/datasources/grafana-datasource.yml"
 sed -i -e "s/YOUR_ADMIN_TOKEN/$INFLUX_TOKEN/g" $MyScriptPath/grafana/provisioning/datasources/grafana-datasource.yml
-echo "CHANGE: replace YYOUR_ORGANIZATION with $INFLUX_ORG in $MyScriptPath/grafana/provisioning/datasources/grafana-datasource.yml"
+echo "CHANGE: replace YOUR_ORGANIZATION with $INFLUX_ORG in $MyScriptPath/grafana/provisioning/datasources/grafana-datasource.yml"
 sed -i -e "s/YOUR_ORGANIZATION/$INFLUX_ORG/g" $MyScriptPath/grafana/provisioning/datasources/grafana-datasource.yml
 echo "CHANGE: replace YOUR_BUCKET_NAME with $INFLUX_BUCKET in $MyScriptPath/grafana/provisioning/datasources/grafana-datasource.yml"
 sed -i -e "s/YOUR_BUCKET_NAME/$INFLUX_BUCKET/g" $MyScriptPath/grafana/provisioning/datasources/grafana-datasource.yml
