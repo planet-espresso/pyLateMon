@@ -14,11 +14,13 @@ MyScriptPath=`dirname $0`
 MyScriptPathContainer="$MyScriptPath/CONTAINER/"
 
 # Replace .env MyPath Path with local path if NOT changed
-echo "CHANGE: while not set, changing MyPath in .env to $MyScriptPathContainer"
 sed -i -e "s#/YOUR_PATH_TO_CONTAINER_STATIC_DATA#$MyScriptPathContainer#g" .env
+
 
 # Read variables from .env file
 source .env
+
+echo "INFO: MyPath is $MyPath"
 
 # Make relevant direcotries
 echo "MKDIR: creating $MyPath"
