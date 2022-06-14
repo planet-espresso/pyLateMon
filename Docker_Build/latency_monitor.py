@@ -67,7 +67,8 @@ class MyInfluxDB():
         # create influxdb client
         self.client = InfluxDBClient(url=INFX_URL,
                                      token=INFX_TOKEN,
-                                     org=INFX_ORG)
+                                     org=INFX_ORG,
+                                     verify_ssl=False)
 
         # create influxdb write api
         self.write_api = self.client.write_api(write_options=WriteOptions(batch_size=INFX_BATCH,
