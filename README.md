@@ -280,6 +280,9 @@ Contributors names and contact info
 
 ## Version History
 
+* v0.2b
+  * cleanup
+
 * v0.2a
   * fixed some missing variables
   * fixe a missing integer declaration in latency-monitor
