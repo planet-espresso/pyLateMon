@@ -1,6 +1,6 @@
 # Docker Based Latency Monitor
 
-Docker container which tracks latency of one or many hosts and reports to InfluxDBv2.
+Docker container(s) which tracks latency of one or many hosts and reports to InfluxDBv2.
 
 ## Description
 
@@ -31,7 +31,7 @@ You can use it in *standalone* or *full stack* mode.
 
 ## Requirements
 
-- Docker
+- Docker (CE)
 - Docker-Compose
 - InfluxDB Version >= 2
 - pythonping needs root privileges so same for the container
@@ -47,9 +47,9 @@ Also some influx connection options are just configurable via config file but no
 
 ### Behaviour 
 
-Per default the python influx connector will cache all replies and sends them bundled every 30 seconds to the Influx DB.
+Per default the used python influxdb connector will cache all replies and sends them bundled every 30 seconds to the Influx DB.
 
-The container will be build at 1st start.
+Actually the latency-monitor container is build on demand, a dockerhub image is on the roadmap...
 
 You can find everything under *./Docker_Build/* and in the python program itself [latency_monitor.py](./Docker_Build/latency_monitor.py)
 
@@ -97,7 +97,7 @@ docker latency-monitor -v ./latency-monitor/config.ini:/app/config.ini:ro
 
 ## Configuration (Standalone)
 
-1st thing to do is creating the *docker-compose.yml from [docker-compose-standalone.yml](./docker-compose-standalone.yml):
+1st thing to do is creating the *docker-compose.yml* from [docker-compose-standalone.yml](./docker-compose-standalone.yml):
 
 ```
 cp docker-compose-standalone.yml docker-compose.yml
@@ -147,7 +147,7 @@ Just create a valid *.env* File by:
 cp env .env
 ```
 
-and editing it to your needs.
+and edit it to your needs.
 
 After everyting within *.env* is in order just do:
 
@@ -159,10 +159,14 @@ Everything should be right in place now.
 
 Just the certificates are missing look [here](#certificate)
 
+Now run it and mybe pick a example dashboard for grafana from [here](#grafana-dashboard-examples)
+
 -----
 -----
 
-### WTF maual mode
+### WTF manual mode
+
+REALLY???
 
 You need to set all on your own:
 
@@ -228,6 +232,8 @@ Everything should be right in place now.
 
 Just the certificates are missing look [here](#certificate)
 
+Now run it and mybe pick a example dashboard for grafana from [here](#grafana-dashboard-examples)
+
 -----
 -----
 
@@ -253,7 +259,7 @@ Thats it
 
 ## Grafana Dashboard Examples
 
-Within the local path *./examples/grafana/*  you can find example *.json* files which can be imported to grafana as dashboards to give you a first point to start with.
+Within the local path [./examples/grafana/](./examples/grafana/) you can find example *.json* files which can be imported to grafana as dashboards to give you a first point to start with.
 
 
 -----
