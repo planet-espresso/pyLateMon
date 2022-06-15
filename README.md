@@ -280,6 +280,12 @@ Contributors names and contact info
 
 ## Version History
 
+* v0.2a
+  * fixed some missing variables
+  * fixe a missing integer declaration in latency-monitor
+  * added automatic config creation for full-stack
+  * cleanups
+
 * v0.1
     * Initial Release
 
