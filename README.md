@@ -161,6 +161,14 @@ Just the certificates are missing look [here](#certificate)
 
 Now run it and mybe pick a example dashboard for grafana from [here](#grafana-dashboard-examples)
 
+#### BACKUPS FILES ???
+
+The script will backup following files if found:
+
+- *./docker-compose.yml*
+- *./grafana/provisioning/datasources/grafana-datasource.yml*
+
+
 -----
 -----
 
@@ -181,7 +189,7 @@ You need to configure Variables in following files to make the compose work:
 
 -----
 
-- **docker-compose.yml** *(was docker-compose-full_stack.yml before)*
+- **docker-compose.yml** *(generated from docker-compose-full_stack.yml)*
   - PLACE_YOUR_FQDN_HERE (3 times)
 
 -----
@@ -199,7 +207,7 @@ You need to configure Variables in following files to make the compose work:
 
 -----
 
-- **grafana/provisioning/datasources/grafana-datasource.yml**
+- **grafana/provisioning/datasources/grafana-datasource.yml** *(generated from grafana/grafana-datasource-template.yml)*
   - YOUR_ADMIN_TOKEN
   - YOUR_ORGANIZATION
   - YOUR_BUCKET_NAME
@@ -279,6 +287,11 @@ Contributors names and contact info
 * [Sven Holz](mailto:code+latency-monitor@planet-espresso.com)
 
 ## Version History
+
+* v0.3
+  * setup-script fixed and backup added
+  * fixed latency value problem (was sometimes string instead of float)
+  * cleanup
 
 * v0.2b
   * cleanup
