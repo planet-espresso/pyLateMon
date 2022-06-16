@@ -4,4 +4,4 @@
 *.backup
 grafana-datasource.yml
 docker-compose.yml
-config-template.ini
+config.ini
