@@ -64,6 +64,7 @@ INFLUX_TOKEN | eWOcp-MCv2Y3IJPlER7wc...ICKirhw0lwEczRNnrIoTqZAg== | InfluxDB API
 INFLUX_BUCKET | latency | InfluxDB Bucket | must
 INFLUX_ORG | MyOrg | InfluxDB Organization | must
 TARGET_HOST | 8.8.8.8 | Monitored Host (IP/FQDN) | must
+TARGET_TIMEOUT | 0.5 | ping timeout in sec. | option
 TARGET_TIMER | 3 | ping frequency in sec. | option
 TARGET_LOCATION | Google | decript. location | option
 
@@ -121,6 +122,7 @@ in the **.env** file *(env needs to be renamed to .env)* configure following var
 - YOUR_BUCKET_NAME
 - YOUR_ADMIN_TOKEN
 - YOUR_MONITORED_TARGET
+- YOUR_MONITORED_TARGET_TIMEOUT
 - YOUR_MONITORED_TARGET_TIMER
 - YOUR_MONITORED_TARGET_LOCATION
 
@@ -204,6 +206,7 @@ You need to configure Variables in following files to make the compose work:
   - YOUR_BUCKET_NAME
   - YOUR_ADMIN_TOKEN
   - YOUR_MONITORED_TARGET
+  - YOUR_MONITORED_TARGET_TIMEOUT
   - YOUR_MONITORED_TARGET_TIMER
   - YOUR_MONITORED_TARGET_LOCATION
 
@@ -289,6 +292,10 @@ Contributors names and contact info
 * [Sven Holz](mailto:code+latency-monitor@planet-espresso.com)
 
 ## Version History
+
+- v0.3a
+  - ping timeout added
+  - cleanup
 
 * v0.3
   * setup-script fixed and backup added
