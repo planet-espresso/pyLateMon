@@ -57,16 +57,16 @@ You can find everything under *./Docker_Build/* and in the python program itself
 
 ### ENV Variables
 
-Name | Example | Usage | Option/Must
-:------: | :-----: | :-----: | :-----:
-INFLUX_URL | http://10.0.0.1:8086 | InfluxDB Host | must
-INFLUX_TOKEN | eWOcp-MCv2Y3IJPlER7wc...ICKirhw0lwEczRNnrIoTqZAg== | InfluxDB API Token | must
-INFLUX_BUCKET | latency | InfluxDB Bucket | must
-INFLUX_ORG | MyOrg | InfluxDB Organization | must
-TARGET_HOST | 8.8.8.8 | Monitored Host (IP/FQDN) | must
-TARGET_TIMEOUT | 0.5 | ping timeout in sec. | option
-TARGET_TIMER | 3 | ping frequency in sec. | option
-TARGET_LOCATION | Google | decript. location | option
+Name | Example | Usage | Option/Must | Default
+:------: | :-----: | :-----: | :-----: | :-----:
+INFLUX_URL | http://10.0.0.1:8086 | InfluxDB Host | must | ---
+INFLUX_TOKEN | eWOcp-MCv2YPlER7wc...0zRNnrIoTqZAg== | InfluxDB API Token | must | ---
+INFLUX_BUCKET | latency | InfluxDB Bucket | must | ---
+INFLUX_ORG | MyOrg | InfluxDB Organization | must | ---
+TARGET_HOST | 8.8.8.8 | Monitored Host (IP/FQDN) | must | ---
+TARGET_TIMEOUT | 0.5 | ping timeout in sec. | option | *1*
+TARGET_TIMER | 3 | ping frequency in sec. | option | *5*
+TARGET_LOCATION | Google | decript. location | option | *unknown*
 
 -----
 
