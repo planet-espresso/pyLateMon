@@ -76,7 +76,7 @@ TARGET_LOCATION | Google | decript. location | optional | String |**unknown**
 
 **Keep in mind it´s a OR decision not a AND**  
 
-See [./latency-monitor/config.ini](./latency-monitor/config.ini)
+See [./latency-monitor/config-tenplate.ini](./latency-monitor/config-template.ini)
 
 **ENV wins over file**
 
