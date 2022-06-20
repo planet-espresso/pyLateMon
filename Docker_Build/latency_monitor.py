@@ -29,7 +29,7 @@ class MyInfluxDB():
             writes received data to Influxdb:
                 host: string which includes IP or FQDN
                 host_location: string which includes location of the host
-                ping_response: string which includes the ping reply in ms
+                ping_response: float which includes the ping reply in ms
     """
 
     def __init__(self):
@@ -100,20 +100,23 @@ class ThreadPing(Thread):
     ----------
         db: InfluxDB Object
         host: string which includes IP or FQDN
+        host_timeout: float which defines how long we wait for a reply
         host_timer: integer which defines how often pings are send in seconds (min. 1)
         host_location: string which includes location of the host
     """
-    def __init__(self, db, host, host_timer, host_location):
+
+    def __init__(self, db, host, host_timeout, host_timer, host_location):
         Thread.__init__(self)
         self.MyDB = db
         self.host = host
+        self.host_timeout = host_timeout
         self.host_timer = host_timer
         self.host_location = host_location
 
     def run(self):
         self.starttime = time()
         while True:
-            self.ping_response_list = ping(self.host, count=1)
+            self.ping_response_list = ping(self.host, timeout=self.host_timeout, count=1)
             self.ping_response = "{:.2f}".format(self.ping_response_list.rtt_avg_ms)
             self.MyDB.write(self.host, self.host_location, self.ping_response)
             sleep(self.host_timer - ((time() - self.starttime) % 1))
@@ -129,6 +132,7 @@ def main():
     ## IF ENVIRONMENT VARIABLES ARE PASSED IGNORE CONFIG FILE
     if 'TARGET_HOST' in os.environ:
         host = os.environ['TARGET_HOST']
+        host_timeout = float(os.getenv('TARGET_TIMEOUT', 1))
         host_timer = int(os.getenv('TARGET_TIMER', 5))
         host_location = os.getenv('TARGET_LOCATION', 'unknown')
         
@@ -149,6 +153,9 @@ def main():
         # Create thread for each configured host
         for key, host in host_items:
 
+            # Check if hosts timeout is set otherwise use "1" (means 1 seconds)
+            host_timeout = float(config.get('hosts_timeout', key, fallback=1))
+
             # Check if hosts timer is set otherwise use "5" (means 5 seconds)
             host_timer = int(config.get('hosts_timer', key, fallback=5))
 
@@ -157,7 +164,7 @@ def main():
 
             # Create Thread
             print("Creating thread for: %s, with interval: %s and location: %s" %(host, host_timer, host_location))
-            thread = ThreadPing(MyDB, host, host_timer, host_location)
+            thread = ThreadPing(MyDB, host, host_timeout, host_timer, host_location)
             my_threads.append(thread)
             thread.start()
 

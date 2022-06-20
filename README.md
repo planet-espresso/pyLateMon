@@ -77,6 +77,8 @@ TARGET_LOCATION | Google | decript. location | option
 
 See [./latency-monitor/config.ini](./latency-monitor/config.ini)
 
+**ENV wins over file**
+
 
 #### Docker-Compose Style
 

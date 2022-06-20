@@ -134,6 +134,7 @@ services:
       - INFLUX_BUCKET
       - INFLUX_ORG
       - TARGET_HOST
+      - TARGET_TIMEOUT
       - TARGET_TIMER
       - TARGET_LOCATION
     networks:
