@@ -137,7 +137,8 @@ def main():
         host_location = os.getenv('TARGET_LOCATION', 'unknown')
         
         # Create Thread
-        print("Creating thread for: %s, with interval: %s and location: %s" % (host, host_timeout, host_timer, host_location))
+        print("Creating thread for: %s, with timeout: %s, with interval: %s and location: %s" % (
+            host, host_timeout, host_timer, host_location))
         thread = ThreadPing(MyDB, host, host_timeout, host_timer, host_location)
         my_threads.append(thread)
         thread.start()
