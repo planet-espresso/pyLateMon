@@ -57,16 +57,16 @@ You can find everything under *./Docker_Build/* and in the python program itself
 
 ### ENV Variables
 
-Name | Example | Usage | Option/Must | Default
-:------: | :-----: | :-----: | :-----: | :-----:
-INFLUX_URL | http://10.0.0.1:8086 | InfluxDB Host | must | ---
-INFLUX_TOKEN | eWOcp-MCv2YPlER7wc...0zRNnrIoTqZAg== | InfluxDB API Token | must | ---
-INFLUX_BUCKET | latency | InfluxDB Bucket | must | ---
-INFLUX_ORG | MyOrg | InfluxDB Organization | must | ---
-TARGET_HOST | 8.8.8.8 | Monitored Host (IP/FQDN) | must | ---
-TARGET_TIMEOUT | 0.5 | ping timeout in sec. | option | *1*
-TARGET_TIMER | 3 | ping frequency in sec. | option | *5*
-TARGET_LOCATION | Google | decript. location | option | *unknown*
+Name | Example | Usage | Option/Must | Type | Default
+:------: | :-----: | :-----: | :-----: | :-----: | :-----:
+INFLUX_URL | http://10.0.0.1:8086 | InfluxDB Host | must | URL | ---
+INFLUX_TOKEN | eWOcp-MCv2YPlER7wc...0zRNnrIoTqZAg== | InfluxDB API Token | must | String | ---
+INFLUX_BUCKET | latency | InfluxDB Bucket | must | String | ---
+INFLUX_ORG | MyOrg | InfluxDB Organization | must | String | ---
+TARGET_HOST | 8.8.8.8 | Monitored Host (IP/FQDN) | must | FQDN or IP | ---
+TARGET_TIMEOUT | 0.5 | ping timeout in sec. | optional | Float >0 | **1**
+TARGET_TIMER | 3 | ping frequency in sec. | optional | Int >1 | **5**
+TARGET_LOCATION | Google | decript. location | optional | String |**unknown**
 
 -----
 
