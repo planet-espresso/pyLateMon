@@ -245,7 +245,7 @@ Everything should be right in place now.
 
 Just the certificates are missing look [here](#certificate)
 
-Now run it and mybe pick a example dashboard for grafana from [here](#grafana-dashboard-examples)
+Now just start over and maybe pick an example dashboard for grafana from [here](#grafana-dashboard-examples)
 
 -----
 -----
