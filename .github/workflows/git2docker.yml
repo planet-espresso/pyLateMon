@@ -3,10 +3,18 @@
 name: CI to Docker Hub
 
 # Controls when the workflow will run
-on:
+##on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
+##  push:
+##    branches: [ "master" ]
+
+
+# Only update with new tag pushed
+on:
   push:
-    branches: [ "master" ]
+    tags:
+      - "v*.*"
+
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
