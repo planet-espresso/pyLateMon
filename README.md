@@ -293,6 +293,9 @@ Contributors names and contact info
 
 ## Version History
 
+- v0.4a
+  - fixed tag recognition for buildprocess
+
 - v0.4
   - moved from self build iamge to dockerhub
 
