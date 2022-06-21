@@ -120,7 +120,7 @@ services:
   latency-monitor:
     container_name: latency-monitor
     hostname: latency-monitor
-    build: ./Docker_Build
+    image: planetespresso/pylatemon
     depends_on: 
       - influxdb
     restart: always
